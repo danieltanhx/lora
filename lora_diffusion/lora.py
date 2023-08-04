@@ -299,8 +299,8 @@ def inject_trainable_lora(
         require_grad_params.append(_module._modules[name].lora_down.parameters())
 
         if loras != None:
-            _module._modules[name].lora_up.weight = loras.pop(0)
-            _module._modules[name].lora_down.weight = loras.pop(0)
+            _module._modules[name].lora_up.weight.data = loras.pop(0).to(_module._modules[name].lora_up.weight.dtype)
+            _module._modules[name].lora_down.weight.data = loras.pop(0).to(_module._modules[name].lora_down.weight.dtype)
 
         _module._modules[name].lora_up.weight.requires_grad = True
         _module._modules[name].lora_down.weight.requires_grad = True
